@@ -1,53 +1,56 @@
-import Html exposing (Html, button, div, text)
-import Html.App as App
-import Html.Events exposing (onClick)
-import Dict 
+module Main exposing (..)
 
+import Html as App exposing (Html, button, div, text)
+import Html.Events exposing (onClick)
+import Dict
 import Counter
 import Parts
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-  App.program
-    { init = init
-    , subscriptions = always Sub.none
-    , update = update
-    , view = view
-    }
+    App.program
+        { init = init
+        , subscriptions = always Sub.none
+        , update = update
+        , view = view
+        }
+
 
 
 -- MODEL
 
 
 type alias Model =
-  { counter : Counter.Indexed Counter.Model
-  }
+    { counter : Counter.Indexed Counter.Model
+    }
 
 
-init : (Model, Cmd Msg)
+init : ( Model, Cmd Msg )
 init =
-  ( { counter = Dict.empty }
-  , Cmd.none
-  )
+    ( { counter = Dict.empty }
+    , Cmd.none
+    )
+
 
 
 -- UPDATE
 
 
 type Msg
-  = Reset
-  | CounterMsg (Parts.Msg Model Msg)
+    = Reset
+    | CounterMsg (Parts.Msg Model Msg)
 
 
-update : Msg -> Model -> (Model, Cmd Msg)
+update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-  case msg of
-    Reset ->
-      init
+    case msg of
+        Reset ->
+            init
 
-    CounterMsg msg' -> 
-      Parts.update msg' model
+        CounterMsg msg_ ->
+            Parts.update msg_ model
+
 
 
 -- VIEW
@@ -55,8 +58,8 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-  div
-    []
-    [ Counter.render CounterMsg [0] model
-    , button [ onClick Reset ] [ text "RESET" ]
-    ]
+    div
+        []
+        [ Counter.render CounterMsg [ 0 ] model
+        , button [ onClick Reset ] [ text "RESET" ]
+        ]
