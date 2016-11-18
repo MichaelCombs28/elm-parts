@@ -18,6 +18,10 @@ and Action, all of which can be dispatched by the single `update` function in
 this module. We call such a lifted component a "part" (think "interchangeable
 parts".)
 
+# Latest Changes
+
+* Upgraded to fit Elm 0.18
+
 # Drawbacks
 
 1. Elm-parts moves work from component consumers to component authors. As a 
